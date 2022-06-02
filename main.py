@@ -134,7 +134,10 @@ def main(args):
         assert args.masks, "Frozen training is meant for segmentation only"
     print(args)
 
+    args.dataset_file = 'polyp'
+
     device = torch.device(args.device)
+    device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
     # fix the seed for reproducibility
     seed = args.seed + utils.get_rank()

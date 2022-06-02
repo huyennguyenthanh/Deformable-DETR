@@ -11,8 +11,7 @@ import torch.utils.data
 from .torchvision_datasets import CocoDetection
 
 from .coco import build as build_coco
-
-
+from .polyb_dataset import build as build_polyp
 def get_coco_api_from_dataset(dataset):
     for _ in range(10):
         # if isinstance(dataset, torchvision.datasets.CocoDetection):
@@ -24,6 +23,11 @@ def get_coco_api_from_dataset(dataset):
 
 
 def build_dataset(image_set, args):
+    """
+        image_set: mode "train" or "val"
+    """
+    if args.dataset_file == 'polyb':
+        return build_polyp(image_set, args)
     if args.dataset_file == 'coco':
         return build_coco(image_set, args)
     if args.dataset_file == 'coco_panoptic':
