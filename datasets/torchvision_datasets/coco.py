@@ -48,7 +48,7 @@ class CocoDetection(VisionDataset):
         for index, img_id in zip(tqdm.trange(len(self.ids)), self.ids):
             if index % self.local_size != self.local_rank:
                 continue
-            path = self.coco.loadImgs(img_id)[0]['file_name']
+            path = self.coco.loadImgs(img_id)[0]['filename']
             with open(os.path.join(self.root, path), 'rb') as f:
                 self.cache[path] = f.read()
 
@@ -72,7 +72,7 @@ class CocoDetection(VisionDataset):
         ann_ids = coco.getAnnIds(imgIds=img_id)
         target = coco.loadAnns(ann_ids)
 
-        path = coco.loadImgs(img_id)[0]['file_name']
+        path = coco.loadImgs(img_id)[0]['filename']
 
         img = self.get_image(path)
         if self.transforms is not None:
